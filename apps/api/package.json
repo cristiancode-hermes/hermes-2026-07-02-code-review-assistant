@@ -1,0 +1,48 @@
+{
+  "name": "api",
+  "version": "1.0.0",
+  "description": "Code Review Assistant API",
+  "main": "dist/main.js",
+  "scripts": {
+    "build": "tsc --build --force",
+    "start": "node dist/main.js",
+    "start:dev": "ts-node src/main.ts",
+    "test": "jest --passWithNoTests",
+    "test:watch": "jest --watch"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@nestjs/common": "*",
+    "@nestjs/config": "*",
+    "@nestjs/core": "*",
+    "@nestjs/jwt": "*",
+    "@nestjs/passport": "*",
+    "@nestjs/platform-express": "*",
+    "@nestjs/swagger": "*",
+    "@nestjs/typeorm": "*",
+    "bcryptjs": "*",
+    "class-transformer": "*",
+    "class-validator": "*",
+    "passport": "*",
+    "passport-jwt": "*",
+    "reflect-metadata": "*",
+    "rxjs": "*",
+    "sql.js": "*",
+    "typeorm": "*"
+  },
+  "devDependencies": {
+    "@nestjs/cli": "*",
+    "@nestjs/testing": "*",
+    "@types/bcryptjs": "*",
+    "@types/express": "*",
+    "@types/jest": "*",
+    "@types/node": "*",
+    "@types/passport-jwt": "*",
+    "jest": "*",
+    "ts-jest": "*",
+    "ts-node": "*",
+    "typescript": "*"
+  }
+}
