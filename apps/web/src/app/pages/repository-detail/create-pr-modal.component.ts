@@ -12,24 +12,24 @@ import { InputFieldComponent } from '../../shared/input-field.component';
   standalone: true,
   imports: [FormsModule, ButtonComponent, ModalComponent, InputFieldComponent],
   template: `
-    <app-modal [open]="open()" title="New Pull Request" size="md" (close)="close.emit()">
-      @if (error()) {
-        <div class="mb-4 p-3 rounded-lg bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 text-sm text-danger">
-          {{ error() }}
-        </div>
-      }
-      <form class="space-y-4">
-        <app-input-field label="Title" type="text" placeholder="PR title" [(value)]="title" />
-        <app-input-field label="Source Branch" type="text" placeholder="feature/my-feature" [(value)]="sourceBranch" />
-        <app-input-field label="Target Branch" type="text" placeholder="main" [(value)]="targetBranch" />
-        <app-input-field label="Description" type="text" placeholder="Description (optional)" [(value)]="description" />
-        <div class="flex gap-3 justify-end pt-2">
-          <app-button variant="secondary" (handleClick)="close.emit()">Cancel</app-button>
-          <app-button [loading]="submitting()" (handleClick)="onSubmit()">Create PR</app-button>
-        </div>
-      </form>
-    </app-modal>
-  `,
+<app-modal [open]="open()" title="New Pull Request" size="md" (close)="close.emit()">
+@if (error()) {
+<div class="mb-4 p-3 rounded-btn bg-red-50 dark:bg-red-950/20 border border-red-200 dark:border-red-800 text-sm text-danger">
+{{ error() }}
+</div>
+}
+<form class="space-y-4">
+<app-input-field label="Title" type="text" placeholder="PR title" [(value)]="title" />
+<app-input-field label="Source Branch" type="text" placeholder="feature/my-feature" [(value)]="sourceBranch" />
+<app-input-field label="Target Branch" type="text" placeholder="main" [(value)]="targetBranch" />
+<app-input-field label="Description" type="text" placeholder="Description (optional)" [(value)]="description" />
+<div class="flex gap-3 justify-end pt-2">
+<app-button variant="secondary" (handleClick)="close.emit()">Cancel</app-button>
+<app-button [loading]="submitting()" (handleClick)="onSubmit()">Create PR</app-button>
+</div>
+</form>
+</app-modal>
+`,
 })
 export class CreatePrModalComponent {
   private readonly api = inject(ApiService);

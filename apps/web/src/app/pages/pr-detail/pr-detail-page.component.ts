@@ -29,92 +29,92 @@ import { ErrorStateComponent } from '../../shared/error-state.component';
     ErrorStateComponent,
   ],
   template: `
-    <div class="space-y-6">
-      @if (loading()) {
-        <app-skeleton type="card" count="3" />
-      } @else if (error()) {
-        <app-error-state [message]="error()!" (retry)="loadData()" />
-      } @else {
-        @let pr = pullRequest();
-        <a [routerLink]="['/repositories', repoId()]" class="text-sm text-primary hover:text-primary-dark inline-block mb-2">
-          &larr; Back to repository
-        </a>
+<div class="space-y-6">
+@if (loading()) {
+<app-skeleton type="card" count="3" />
+} @else if (error()) {
+<app-error-state [message]="error()!" (retry)="loadData()" />
+} @else {
+@let pr = pullRequest();
+<a [routerLink]="['/repositories', repoId()]" class="text-sm text-primary hover:text-primary-dark inline-block mb-2">
+&larr; Back to repository
+</a>
 
-        <app-pr-info-header [pr]="pr!" />
+<app-pr-info-header [pr]="pr!" />
 
-        <!-- Review Controls -->
-        @if (review()?.status !== 'completed') {
-          <div class="flex gap-3">
-            <app-button
-              [loading]="triggeringReview()"
-              (handleClick)="triggerReview()"
-              [disabled]="review()?.status === 'in_progress'"
-            >
-              @if (review()?.status === 'in_progress') {
-                Review in Progress...
-              } @else if (review()?.status === 'failed') {
-                Retry Review
-              } @else {
-                Run Code Review
-              }
-            </app-button>
-          </div>
-        }
+<!-- Review Controls -->
+@if (review()?.status !== 'completed') {
+<div class="flex gap-3">
+<app-button
+[loading]="triggeringReview()"
+(handleClick)="triggerReview()"
+[disabled]="review()?.status === 'in_progress'"
+>
+@if (review()?.status === 'in_progress') {
+Review in Progress...
+} @else if (review()?.status === 'failed') {
+Retry Review
+} @else {
+Run Code Review
+}
+</app-button>
+</div>
+}
 
-        <!-- Review Progress -->
-        @if (agents().length > 0) {
-          <app-review-progress [agents]="agents()" />
-        }
+<!-- Review Progress -->
+@if (agents().length > 0) {
+<app-review-progress [agents]="agents()" />
+}
 
-        <!-- Score Cards -->
-        @if (review()?.scores) {
-          @let scores = review()!.scores!;
-          <div>
-            <h2 class="text-lg font-semibold text-neutral-900 dark:text-neutral-100 mb-3">Scores</h2>
-            <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
-              <app-score-card category="style" [score]="scores.style" />
-              <app-score-card category="bug" [score]="scores.bug" />
-              <app-score-card category="security" [score]="scores.security" />
-              <app-score-card category="performance" [score]="scores.performance" />
-            </div>
-          </div>
-        }
+<!-- Score Cards -->
+@if (review()?.scores) {
+@let scores = review()!.scores!;
+<div>
+<h2 class="heading-2 text-text-primary dark:text-text-primary-dark mb-3">Scores</h2>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+<app-score-card category="style" [score]="scores.style" />
+<app-score-card category="bug" [score]="scores.bug" />
+<app-score-card category="security" [score]="scores.security" />
+<app-score-card category="performance" [score]="scores.performance" />
+</div>
+</div>
+}
 
-        <!-- Executive Summary -->
-        @if (review()?.summary) {
-          <app-executive-summary [summary]="review()!.summary" />
-        }
+<!-- Executive Summary -->
+@if (review()?.summary) {
+<app-executive-summary [summary]="review()!.summary" />
+}
 
-        <!-- Findings -->
-        @if (allFindings().length > 0) {
-          <div>
-            <div class="flex items-center justify-between mb-3">
-              <h2 class="text-lg font-semibold text-neutral-900 dark:text-neutral-100">Findings</h2>
-              <span class="text-sm text-neutral-500 dark:text-neutral-400">{{ filteredFindings().length }} of {{ allFindings().length }}</span>
-            </div>
-            <div class="mb-4">
-              <app-findings-filter-bar
-                [(selectedSeverity)]="severityFilter"
-                [(selectedCategory)]="categoryFilter"
-                (filterChange)="onFilterChange()"
-              />
-            </div>
-            @if (filteredFindings().length === 0) {
-              <div class="text-center py-8 text-sm text-neutral-500 dark:text-neutral-400">
-                No findings match the current filters
-              </div>
-            } @else {
-              <app-findings-by-file [findings]="filteredFindings()" />
-            }
-          </div>
-        } @else if (review()?.status === 'completed') {
-          <app-card title="Findings">
-            <p class="text-sm text-neutral-500 dark:text-neutral-400 text-center py-4">No issues found. Great code!</p>
-          </app-card>
-        }
-      }
-    </div>
-  `,
+<!-- Findings -->
+@if (allFindings().length > 0) {
+<div>
+<div class="flex items-center justify-between mb-3">
+<h2 class="heading-2 text-text-primary dark:text-text-primary-dark">Findings</h2>
+<span class="text-sm text-text-secondary dark:text-text-secondary-dark">{{ filteredFindings().length }} of {{ allFindings().length }}</span>
+</div>
+<div class="mb-4">
+<app-findings-filter-bar
+[(selectedSeverity)]="severityFilter"
+[(selectedCategory)]="categoryFilter"
+(filterChange)="onFilterChange()"
+/>
+</div>
+@if (filteredFindings().length === 0) {
+<div class="text-center py-8 text-sm text-text-secondary dark:text-text-secondary-dark">
+No findings match the current filters
+</div>
+} @else {
+<app-findings-by-file [findings]="filteredFindings()" />
+}
+</div>
+} @else if (review()?.status === 'completed') {
+<app-card title="Findings">
+<p class="text-sm text-text-secondary dark:text-text-secondary-dark text-center py-4">No issues found. Great code!</p>
+</app-card>
+}
+}
+</div>
+`,
 })
 export class PrDetailPageComponent {
   private readonly route = inject(ActivatedRoute);

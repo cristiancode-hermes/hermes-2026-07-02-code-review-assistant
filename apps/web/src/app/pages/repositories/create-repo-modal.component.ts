@@ -11,32 +11,32 @@ import { InputFieldComponent } from '../../shared/input-field.component';
   standalone: true,
   imports: [FormsModule, ButtonComponent, ModalComponent, InputFieldComponent],
   template: `
-    <app-modal [open]="open()" title="Add Repository" size="md" (close)="close.emit()">
-      @if (error()) {
-        <div class="mb-4 p-3 rounded-lg bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 text-sm text-danger">
-          {{ error() }}
-        </div>
-      }
-      <form class="space-y-4">
-        <app-input-field
-          label="Repository URL"
-          type="text"
-          placeholder="https://github.com/user/repo"
-          [(value)]="repoUrl"
-        />
-        <app-input-field
-          label="Repository Name"
-          type="text"
-          placeholder="my-awesome-project"
-          [(value)]="repoName"
-        />
-        <div class="flex gap-3 justify-end pt-2">
-          <app-button variant="secondary" (handleClick)="close.emit()">Cancel</app-button>
-          <app-button [loading]="submitting()" (handleClick)="onSubmit()">Add Repository</app-button>
-        </div>
-      </form>
-    </app-modal>
-  `,
+<app-modal [open]="open()" title="Add Repository" size="md" (close)="close.emit()">
+@if (error()) {
+<div class="mb-4 p-3 rounded-btn bg-red-50 dark:bg-red-950/20 border border-red-200 dark:border-red-800 text-sm text-danger">
+{{ error() }}
+</div>
+}
+<form class="space-y-4">
+<app-input-field
+label="Repository URL"
+type="text"
+placeholder="https://github.com/user/repo"
+[(value)]="repoUrl"
+/>
+<app-input-field
+label="Repository Name"
+type="text"
+placeholder="my-awesome-project"
+[(value)]="repoName"
+/>
+<div class="flex gap-3 justify-end pt-2">
+<app-button variant="secondary" (handleClick)="close.emit()">Cancel</app-button>
+<app-button [loading]="submitting()" (handleClick)="onSubmit()">Add Repository</app-button>
+</div>
+</form>
+</app-modal>
+`,
 })
 export class CreateRepoModalComponent {
   private readonly api = inject(ApiService);

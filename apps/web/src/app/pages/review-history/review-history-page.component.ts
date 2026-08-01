@@ -17,43 +17,43 @@ import { SearchBarComponent } from '../../shared/search-bar.component';
     SearchBarComponent,
   ],
   template: `
-    <div class="space-y-6">
-      <div>
-        <h1 class="text-2xl font-bold text-neutral-900 dark:text-neutral-100">Review History</h1>
-        <p class="text-neutral-500 dark:text-neutral-400 mt-1">All your past code reviews</p>
-      </div>
+<div class="space-y-6">
+<div>
+<h1 class="heading-1 text-text-primary dark:text-text-primary-dark">Review History</h1>
+<p class="text-text-secondary dark:text-text-secondary-dark mt-1">All your past code reviews</p>
+</div>
 
-      <app-search-bar
-        placeholder="Search reviews..."
-        [(query)]="searchQuery"
-        (search)="onSearch($event)"
-      />
+<app-search-bar
+placeholder="Search reviews..."
+[(query)]="searchQuery"
+(search)="onSearch($event)"
+/>
 
-      @if (loading()) {
-        <app-skeleton type="row" count="5" />
-      } @else if (error()) {
-        <app-error-state [message]="error()!" (retry)="loadHistory()" />
-      } @else if (filteredReviews().length === 0) {
-        @if (searchQuery()) {
-          <app-empty-state
-            title="No reviews found"
-            [message]="'No reviews match &quot;' + searchQuery() + '&quot;'"
-          />
-        } @else {
-          <app-empty-state
-            title="No reviews yet"
-            message="Reviews will appear here once you start analyzing pull requests."
-          />
-        }
-      } @else {
-        <div class="space-y-2">
-          @for (review of filteredReviews(); track review.id) {
-            <app-review-history-row [review]="review" />
-          }
-        </div>
-      }
-    </div>
-  `,
+@if (loading()) {
+<app-skeleton type="row" count="5" />
+} @else if (error()) {
+<app-error-state [message]="error()!" (retry)="loadHistory()" />
+} @else if (filteredReviews().length === 0) {
+@if (searchQuery()) {
+<app-empty-state
+title="No reviews found"
+[message]="'No reviews match &quot;' + searchQuery() + '&quot;'"
+/>
+} @else {
+<app-empty-state
+title="No reviews yet"
+message="Reviews will appear here once you start analyzing pull requests."
+/>
+}
+} @else {
+<div class="space-y-2">
+@for (review of filteredReviews(); track review.id) {
+<app-review-history-row [review]="review" />
+}
+</div>
+}
+</div>
+`,
 })
 export class ReviewHistoryPageComponent {
   private readonly api = inject(ApiService);

@@ -12,16 +12,16 @@ export type BadgeVariant =
   selector: 'app-badge',
   standalone: true,
   template: `
-    <span
-      class="inline-flex items-center font-medium rounded-full"
-      [class]="sizeClasses() + ' ' + colorClasses()"
-    >
-      @if (dot()) {
-        <span class="w-1.5 h-1.5 rounded-full mr-1.5" [class]="dotColor()"></span>
-      }
-      {{ text() }}
-    </span>
-  `,
+<span
+class="inline-flex items-center font-medium rounded-badge"
+[class]="sizeClasses() + ' ' + colorClasses()"
+>
+@if (dot()) {
+<span class="w-1.5 h-1.5 rounded-badge mr-1.5" [class]="dotColor()"></span>
+}
+{{ text() }}
+</span>
+`,
 })
 export class BadgeComponent {
   readonly text = input('');

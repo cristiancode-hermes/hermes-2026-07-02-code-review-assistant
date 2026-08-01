@@ -7,29 +7,29 @@ import { BadgeComponent } from '../../shared/badge.component';
   standalone: true,
   imports: [BadgeComponent],
   template: `
-    <div class="p-4 hover:bg-neutral-50 dark:hover:bg-neutral-750 transition-colors">
-      <div class="flex items-start gap-3">
-        <div
-          class="w-2 h-2 rounded-full mt-1.5 flex-shrink-0"
-          [class]="severityDot()"
-        ></div>
-        <div class="flex-1 min-w-0">
-          <div class="flex items-center gap-2 mb-1">
-            <span class="text-sm font-medium text-neutral-900 dark:text-neutral-100">{{ finding().title }}</span>
-            <app-badge [text]="finding().severity" [variant]="severityBadge()" size="sm" />
-            <app-badge [text]="finding().category" variant="info" size="sm" />
-          </div>
-          <p class="text-sm text-neutral-600 dark:text-neutral-400 mb-2">{{ finding().description }}</p>
-          <div class="flex items-center gap-3 text-xs text-neutral-500 dark:text-neutral-400">
-            <span>Line {{ finding().line }}</span>
-            @if (finding().suggestion) {
-              <span class="text-primary">Suggestion available</span>
-            }
-          </div>
-        </div>
-      </div>
-    </div>
-  `,
+<div class="p-4 hover:bg-surface dark:hover:bg-neutral-750 transition-colors">
+<div class="flex items-start gap-3">
+<div
+class="w-2 h-2 rounded-badge mt-1.5 flex-shrink-0"
+[class]="severityDot()"
+></div>
+<div class="flex-1 min-w-0">
+<div class="flex items-center gap-2 mb-1">
+<span class="text-sm font-medium text-text-primary dark:text-text-primary-dark">{{ finding().title }}</span>
+<app-badge [text]="finding().severity" [variant]="severityBadge()" size="sm" />
+<app-badge [text]="finding().category" variant="info" size="sm" />
+</div>
+<p class="text-sm text-neutral-600 dark:text-text-secondary-dark mb-2">{{ finding().description }}</p>
+<div class="flex items-center gap-3 text-xs text-text-secondary dark:text-text-secondary-dark">
+<span>Line {{ finding().line }}</span>
+@if (finding().suggestion) {
+<span class="text-primary">Suggestion available</span>
+}
+</div>
+</div>
+</div>
+</div>
+`,
 })
 export class FindingItemComponent {
   readonly finding = input.required<Finding>();

@@ -17,29 +17,29 @@ import { ErrorStateComponent } from '../../shared/error-state.component';
     ErrorStateComponent,
   ],
   template: `
-    <div class="space-y-4">
-      @if (loading()) {
-        <app-skeleton type="card" count="2" />
-        <app-skeleton type="text" count="5" />
-      } @else if (error()) {
-        <app-error-state [message]="error()!" (retry)="loadDiff()" />
-      } @else {
-        @let diff = data();
-        <a
-          [routerLink]="['/repositories', repoId(), 'prs', prId()]"
-          class="text-sm text-primary hover:text-primary-dark inline-block mb-2"
-        >
-          &larr; Back to pull request
-        </a>
+<div class="space-y-4">
+@if (loading()) {
+<app-skeleton type="card" count="2" />
+<app-skeleton type="text" count="5" />
+} @else if (error()) {
+<app-error-state [message]="error()!" (retry)="loadDiff()" />
+} @else {
+@let diff = data();
+<a
+[routerLink]="['/repositories', repoId(), 'prs', prId()]"
+class="text-sm text-primary hover:text-primary-dark inline-block mb-2"
+>
+&larr; Back to pull request
+</a>
 
-        <app-diff-header [file]="diff!" />
+<app-diff-header [file]="diff!" />
 
-        <div class="overflow-x-auto">
-          <app-diff-side-by-side [file]="diff!" />
-        </div>
-      }
-    </div>
-  `,
+<div class="overflow-x-auto">
+<app-diff-side-by-side [file]="diff!" />
+</div>
+}
+</div>
+`,
 })
 export class DiffViewerPageComponent {
   private readonly route = inject(ActivatedRoute);

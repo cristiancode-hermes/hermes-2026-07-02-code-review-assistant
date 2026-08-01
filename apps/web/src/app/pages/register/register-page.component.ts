@@ -10,68 +10,68 @@ import { InputFieldComponent } from '../../shared/input-field.component';
   standalone: true,
   imports: [RouterLink, FormsModule, ButtonComponent, InputFieldComponent],
   template: `
-    <div class="min-h-screen flex items-center justify-center bg-gradient-to-br from-neutral-50 to-neutral-100 dark:from-neutral-900 dark:to-neutral-950 px-4">
-      <div class="w-full max-w-md">
-        <div class="text-center mb-8">
-          <div class="w-12 h-12 rounded-xl bg-primary flex items-center justify-center mx-auto mb-4">
-            <svg class="w-7 h-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-            </svg>
-          </div>
-          <h1 class="text-2xl font-bold text-neutral-900 dark:text-neutral-100">Create an account</h1>
-          <p class="text-neutral-500 dark:text-neutral-400 mt-2">Get started with Hermes Code Review</p>
-        </div>
+<div class="min-h-screen flex items-center justify-center bg-gradient-to-br from-neutral-50 to-neutral-100 dark:from-neutral-900 dark:to-neutral-950 px-4">
+<div class="w-full max-w-md">
+<div class="text-center mb-8">
+<div class="w-12 h-12 rounded-card bg-primary flex items-center justify-center mx-auto mb-4">
+<svg class="w-7 h-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+</svg>
+</div>
+<h1 class="heading-1 text-text-primary dark:text-text-primary-dark">Create an account</h1>
+<p class="text-text-secondary dark:text-text-secondary-dark mt-2">Get started with Hermes Code Review</p>
+</div>
 
-        <div class="bg-white dark:bg-neutral-800 rounded-xl shadow-sm border border-neutral-200 dark:border-neutral-700 p-6">
-          @if (errorMessage()) {
-            <div class="mb-4 p-3 rounded-lg bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 text-sm text-danger">
-              {{ errorMessage() }}
-            </div>
-          }
+<div class="bg-surface-card dark:bg-neutral-800 rounded-card border border-border dark:border-neutral-700 p-6">
+@if (errorMessage()) {
+<div class="mb-4 p-3 rounded-btn bg-red-50 dark:bg-red-950/20 border border-red-200 dark:border-red-800 text-sm text-danger">
+{{ errorMessage() }}
+</div>
+}
 
-          <form (ngSubmit)="onRegister()" class="space-y-4">
-            <app-input-field
-              label="Name"
-              type="text"
-              placeholder="Your name"
-              [(value)]="name"
-            />
-            <app-input-field
-              label="Email"
-              type="email"
-              placeholder="you@example.com"
-              [(value)]="email"
-            />
-            <app-input-field
-              label="Password"
-              type="password"
-              placeholder="Create a password"
-              [(value)]="password"
-            />
-            <app-input-field
-              label="Confirm Password"
-              type="password"
-              placeholder="Confirm your password"
-              [(value)]="confirmPassword"
-            />
-            <app-button
-              type="submit"
-              class="w-full"
-              [loading]="loading()"
-              (handleClick)="onRegister()"
-            >
-              Create account
-            </app-button>
-          </form>
-        </div>
+<form (ngSubmit)="onRegister()" class="space-y-4">
+<app-input-field
+label="Name"
+type="text"
+placeholder="Your name"
+[(value)]="name"
+/>
+<app-input-field
+label="Email"
+type="email"
+placeholder="you@example.com"
+[(value)]="email"
+/>
+<app-input-field
+label="Password"
+type="password"
+placeholder="Create a password"
+[(value)]="password"
+/>
+<app-input-field
+label="Confirm Password"
+type="password"
+placeholder="Confirm your password"
+[(value)]="confirmPassword"
+/>
+<app-button
+type="submit"
+class="w-full"
+[loading]="loading()"
+(handleClick)="onRegister()"
+>
+Create account
+</app-button>
+</form>
+</div>
 
-        <p class="text-center mt-6 text-sm text-neutral-500 dark:text-neutral-400">
-          Already have an account?
-          <a routerLink="/login" class="text-primary hover:text-primary-dark font-medium">Sign in</a>
-        </p>
-      </div>
-    </div>
-  `,
+<p class="text-center mt-6 text-sm text-text-secondary dark:text-text-secondary-dark">
+Already have an account?
+<a routerLink="/login" class="text-primary hover:text-primary-dark font-medium">Sign in</a>
+</p>
+</div>
+</div>
+`,
 })
 export class RegisterPageComponent {
   private readonly authService = inject(AuthService);

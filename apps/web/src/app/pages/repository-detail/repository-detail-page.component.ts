@@ -23,66 +23,66 @@ import { EmptyStateComponent } from '../../shared/empty-state.component';
     EmptyStateComponent,
   ],
   template: `
-    <div class="space-y-6">
-      @if (loading()) {
-        <app-skeleton type="card" count="2" />
-        <app-skeleton type="row" count="3" />
-      } @else if (error()) {
-        <app-error-state [message]="error()!" (retry)="loadData()" />
-      } @else {
-        @let repo = repository();
-        <div class="flex items-center justify-between">
-          <div>
-            <a routerLink="/repositories" class="text-sm text-primary hover:text-primary-dark mb-1 inline-block">
-              &larr; Repositories
-            </a>
-            <div class="flex items-center gap-3">
-              <h1 class="text-2xl font-bold text-neutral-900 dark:text-neutral-100">{{ repo?.name }}</h1>
-              <app-badge [text]="repo?.language || 'N/A'" variant="info" size="sm" />
-              @if (repo?.private) {
-                <app-badge text="Private" variant="warning" size="sm" />
-              }
-            </div>
-            @if (repo?.description) {
-              <p class="text-neutral-500 dark:text-neutral-400 mt-1">{{ repo?.description }}</p>
-            }
-          </div>
-          <app-button (handleClick)="showCreatePr.set(true)">
-            <svg class="w-4 h-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
-            </svg>
-            New PR
-          </app-button>
-        </div>
+<div class="space-y-6">
+@if (loading()) {
+<app-skeleton type="card" count="2" />
+<app-skeleton type="row" count="3" />
+} @else if (error()) {
+<app-error-state [message]="error()!" (retry)="loadData()" />
+} @else {
+@let repo = repository();
+<div class="flex items-center justify-between">
+<div>
+<a routerLink="/repositories" class="text-sm text-primary hover:text-primary-dark mb-1 inline-block">
+&larr; Repositories
+</a>
+<div class="flex items-center gap-3">
+<h1 class="heading-1 text-text-primary dark:text-text-primary-dark">{{ repo?.name }}</h1>
+<app-badge [text]="repo?.language || 'N/A'" variant="info" size="sm" />
+@if (repo?.private) {
+<app-badge text="Private" variant="warning" size="sm" />
+}
+</div>
+@if (repo?.description) {
+<p class="text-text-secondary dark:text-text-secondary-dark mt-1">{{ repo?.description }}</p>
+}
+</div>
+<app-button (handleClick)="showCreatePr.set(true)">
+<svg class="w-4 h-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+</svg>
+New PR
+</app-button>
+</div>
 
-        <!-- Pull Requests -->
-        <div>
-          <h2 class="text-lg font-semibold text-neutral-900 dark:text-neutral-100 mb-3">Pull Requests</h2>
-          @if (prs().length === 0) {
-            <app-empty-state
-              title="No pull requests"
-              message="Create your first pull request to start getting code reviews."
-              actionLabel="New Pull Request"
-              (action)="showCreatePr.set(true)"
-            />
-          } @else {
-            <div class="space-y-2">
-              @for (pr of prs(); track pr.id) {
-                <app-pull-request-row [pr]="pr" [repoId]="repoId()" />
-              }
-            </div>
-          }
-        </div>
-      }
-    </div>
+<!-- Pull Requests -->
+<div>
+<h2 class="heading-2 text-text-primary dark:text-text-primary-dark mb-3">Pull Requests</h2>
+@if (prs().length === 0) {
+<app-empty-state
+title="No pull requests"
+message="Create your first pull request to start getting code reviews."
+actionLabel="New Pull Request"
+(action)="showCreatePr.set(true)"
+/>
+} @else {
+<div class="space-y-2">
+@for (pr of prs(); track pr.id) {
+<app-pull-request-row [pr]="pr" [repoId]="repoId()" />
+}
+</div>
+}
+</div>
+}
+</div>
 
-    <app-create-pr-modal
-      [open]="showCreatePr()"
-      [repoId]="repoId()"
-      (close)="showCreatePr.set(false)"
-      (created)="loadPrs()"
-    />
-  `,
+<app-create-pr-modal
+[open]="showCreatePr()"
+[repoId]="repoId()"
+(close)="showCreatePr.set(false)"
+(created)="loadPrs()"
+/>
+`,
 })
 export class RepositoryDetailPageComponent {
   private readonly route = inject(ActivatedRoute);

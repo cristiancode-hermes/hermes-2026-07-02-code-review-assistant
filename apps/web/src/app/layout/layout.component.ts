@@ -8,15 +8,15 @@ import { HeaderComponent } from './header.component';
   standalone: true,
   imports: [RouterOutlet, SidebarComponent, HeaderComponent],
   template: `
-    <div class="min-h-screen bg-neutral-50 dark:bg-neutral-900">
-      <app-sidebar />
-      <app-header />
-      <main class="lg:ml-64 pt-16 min-h-screen">
-        <div class="p-6 max-w-7xl mx-auto">
-          <router-outlet />
-        </div>
-      </main>
-    </div>
-  `,
+<div class="min-h-screen bg-surface dark:bg-neutral-900">
+<app-sidebar />
+<app-header />
+<main class="lg:ml-64 pt-16 min-h-screen">
+<div class="p-6 max-w-7xl mx-auto">
+<router-outlet />
+</div>
+</main>
+</div>
+`,
 })
 export class LayoutComponent {}

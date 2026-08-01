@@ -22,61 +22,61 @@ import { EmptyStateComponent } from '../../shared/empty-state.component';
     EmptyStateComponent,
   ],
   template: `
-    <div class="space-y-6">
-      <div class="flex items-center justify-between">
-        <div>
-          <h1 class="text-2xl font-bold text-neutral-900 dark:text-neutral-100">Repositories</h1>
-          <p class="text-neutral-500 dark:text-neutral-400 mt-1">Manage your connected repositories</p>
-        </div>
-        <app-button (handleClick)="showCreateModal.set(true)">
-          <svg class="w-4 h-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
-          </svg>
-          Add Repository
-        </app-button>
-      </div>
+<div class="space-y-6">
+<div class="flex items-center justify-between">
+<div>
+<h1 class="heading-1 text-text-primary dark:text-text-primary-dark">Repositories</h1>
+<p class="text-text-secondary dark:text-text-secondary-dark mt-1">Manage your connected repositories</p>
+</div>
+<app-button (handleClick)="showCreateModal.set(true)">
+<svg class="w-4 h-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+</svg>
+Add Repository
+</app-button>
+</div>
 
-      <app-search-bar
-        placeholder="Search repositories..."
-        [(query)]="searchQuery"
-        (search)="onSearch($event)"
-      />
+<app-search-bar
+placeholder="Search repositories..."
+[(query)]="searchQuery"
+(search)="onSearch($event)"
+/>
 
-      @if (loading()) {
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <app-skeleton type="card" count="4" />
-        </div>
-      } @else if (error()) {
-        <app-error-state [message]="error()!" (retry)="loadRepos()" />
-      } @else if (filteredRepos().length === 0) {
-        @if (searchQuery()) {
-          <app-empty-state
-            title="No repositories found"
-            [message]="'No repositories match &quot;' + searchQuery() + '&quot;'"
-          />
-        } @else {
-          <app-empty-state
-            title="No repositories yet"
-            message="Connect your first repository to get started with code reviews."
-            actionLabel="Add Repository"
-            (action)="showCreateModal.set(true)"
-          />
-        }
-      } @else {
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-          @for (repo of filteredRepos(); track repo.id) {
-            <app-repository-card [repo]="repo" />
-          }
-        </div>
-      }
-    </div>
+@if (loading()) {
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<app-skeleton type="card" count="4" />
+</div>
+} @else if (error()) {
+<app-error-state [message]="error()!" (retry)="loadRepos()" />
+} @else if (filteredRepos().length === 0) {
+@if (searchQuery()) {
+<app-empty-state
+title="No repositories found"
+[message]="'No repositories match &quot;' + searchQuery() + '&quot;'"
+/>
+} @else {
+<app-empty-state
+title="No repositories yet"
+message="Connect your first repository to get started with code reviews."
+actionLabel="Add Repository"
+(action)="showCreateModal.set(true)"
+/>
+}
+} @else {
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+@for (repo of filteredRepos(); track repo.id) {
+<app-repository-card [repo]="repo" />
+}
+</div>
+}
+</div>
 
-    <app-create-repo-modal
-      [open]="showCreateModal()"
-      (close)="showCreateModal.set(false)"
-      (created)="loadRepos()"
-    />
-  `,
+<app-create-repo-modal
+[open]="showCreateModal()"
+(close)="showCreateModal.set(false)"
+(created)="loadRepos()"
+/>
+`,
 })
 export class RepositoriesPageComponent {
   private readonly api = inject(ApiService);
