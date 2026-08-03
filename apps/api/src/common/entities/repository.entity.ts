@@ -30,10 +30,10 @@ export class Repository {
   @Column({ type: 'varchar', length: 100, default: 'main' })
   defaultBranch: string;
 
-  @CreateDateColumn({ type: 'datetime' })
+  @CreateDateColumn({ type: 'timestamp' })
   createdAt: Date;
 
-  @UpdateDateColumn({ type: 'datetime' })
+  @UpdateDateColumn({ type: 'timestamp' })
   updatedAt: Date;
 
   @OneToMany(() => PullRequest, (pr) => pr.repository)

@@ -22,7 +22,7 @@ export class User {
   @Column({ type: 'varchar', length: 255 })
   passwordHash: string;
 
-  @CreateDateColumn({ type: 'datetime' })
+  @CreateDateColumn({ type: 'timestamp' })
   createdAt: Date;
 
   @OneToMany(() => Repository, (repo) => repo.user)

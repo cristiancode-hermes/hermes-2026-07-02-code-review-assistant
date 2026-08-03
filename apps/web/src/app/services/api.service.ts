@@ -249,6 +249,19 @@ export class ApiService {
     );
   }
 
+  // Findings CSV export URL
+  getFindingsExportUrl(
+    repoId: string,
+    prId: string,
+    params?: { severity?: string; category?: string }
+  ): string {
+    const qp = new URLSearchParams();
+    if (params?.severity) qp.set('severity', params.severity);
+    if (params?.category) qp.set('category', params.category);
+    const qs = qp.toString();
+    return `${this.apiUrl}/repositories/${repoId}/prs/${prId}/findings/export${qs ? `?${qs}` : ''}`;
+  }
+
   // User settings
   getSettings(): Observable<Record<string, unknown>> {
     return this.http.get<Record<string, unknown>>(

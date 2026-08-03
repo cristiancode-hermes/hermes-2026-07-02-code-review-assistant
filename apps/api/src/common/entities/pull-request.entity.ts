@@ -46,10 +46,10 @@ export class PullRequest {
   @Column({ type: 'varchar', length: 20, default: 'open' })
   status: string;
 
-  @CreateDateColumn({ type: 'datetime' })
+  @CreateDateColumn({ type: 'timestamp' })
   createdAt: Date;
 
-  @UpdateDateColumn({ type: 'datetime' })
+  @UpdateDateColumn({ type: 'timestamp' })
   updatedAt: Date;
 
   @OneToOne(() => Review, (review) => review.pullRequest)

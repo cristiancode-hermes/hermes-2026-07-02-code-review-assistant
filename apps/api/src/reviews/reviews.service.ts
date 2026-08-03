@@ -9,6 +9,8 @@ import { Review } from '../common/entities/review.entity';
 import { Finding } from '../common/entities/finding.entity';
 import { ReviewFile } from '../common/entities/review-file.entity';
 import { PullRequest } from '../common/entities/pull-request.entity';
+import { Repository as RepositoryEntity } from '../common/entities/repository.entity';
+import { User } from '../common/entities/user.entity';
 import { AgentCoordinatorService } from '../agents/agent-coordinator.service';
 
 @Injectable()
@@ -30,7 +32,28 @@ export class ReviewsService {
   async runReview(prId: number) {
     const pr = await this.prRepo.findOne({ where: { id: prId } });
     if (!pr) {
-      // Create some mock review files for the demo
+      // Demo mode: create a real PR record first (keeps FK integrity in Postgres)
+      const anyRepo = await this.reviewRepo.manager
+        .getRepository(RepositoryEntity)
+        .findOne({ order: { id: 'ASC' } });
+      const repoId = anyRepo?.id ?? 1;
+      const anyUser = await this.reviewRepo.manager
+        .getRepository(User)
+        .findOne({ order: { id: 'ASC' } });
+      const demoUserId = anyUser?.id ?? 1;
+
+      const demoPr = this.prRepo.create({
+        id: prId,
+        repositoryId: repoId,
+        userId: demoUserId,
+        title: `Demo PR #${prId}`,
+        description: 'Generated demo pull request',
+        baseBranch: 'main',
+        sourceBranch: `demo/pr-${prId}`,
+        status: 'open',
+      });
+      await this.prRepo.save(demoPr);
+
       const mockFiles = this.getMockFilesForPR(prId);
       for (const file of mockFiles) {
         await this.reviewFileRepo.save(file);
@@ -43,7 +66,10 @@ export class ReviewsService {
   async getReview(prId: number) {
     const review = await this.reviewRepo.findOne({
       where: { pullRequestId: prId },
-      relations: { findings: true, pullRequest: true },
+      relations: {
+        findings: { reviewFile: true },
+        pullRequest: { repository: true },
+      },
     });
     if (!review) throw new NotFoundException('Review not found for this PR');
     return review;
@@ -128,6 +154,44 @@ export class ReviewsService {
       relations: { reviewFile: true },
       order: { severity: 'ASC', createdAt: 'DESC' },
     });
+  }
+
+  async exportFindingsCsv(
+    prId: number,
+    filters: { severity?: string; category?: string; file?: string },
+  ) {
+    const findings = await this.getFindings(prId, filters);
+
+    const escape = (v: unknown): string => {
+      const s = v == null ? '' : String(v);
+      return /[",\n]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s;
+    };
+
+    const header = [
+      'severity',
+      'category',
+      'file',
+      'line_start',
+      'line_end',
+      'rule',
+      'message',
+      'suggestion',
+    ];
+    const rows = findings.map((f) => [
+      f.severity,
+      f.agentName,
+      f.reviewFile?.filePath ?? '',
+      f.lineStart,
+      f.lineEnd ?? '',
+      f.ruleId ?? '',
+      f.message,
+      f.suggestion ?? '',
+    ]);
+
+    return {
+      filename: `findings-pr-${prId}-${new Date().toISOString().slice(0, 10)}.csv`,
+      csv: [header, ...rows].map((r) => r.map(escape).join(',')).join('\n'),
+    };
   }
 
   async getFinding(prId: number, findingId: number) {

@@ -21,6 +21,9 @@ describe('ReviewsService', () => {
     findOne: jest.fn(),
     create: jest.fn(),
     save: jest.fn(),
+    manager: {
+      getRepository: jest.fn().mockReturnValue({ findOne: jest.fn().mockResolvedValue({ id: 1, name: 'Demo Repo' }) }),
+    },
   };
 
   const mockFindingRepo = {
@@ -38,6 +41,8 @@ describe('ReviewsService', () => {
 
   const mockPrRepo = {
     findOne: jest.fn(),
+    create: jest.fn(),
+    save: jest.fn(),
   };
 
   const mockCoordinator = {

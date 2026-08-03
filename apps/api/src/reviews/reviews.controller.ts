@@ -97,6 +97,26 @@ export class ReviewsController {
     return this.reviewsService.getFindingsStats(prId);
   }
 
+  @Get(':prId/findings/export')
+  @ApiOperation({ summary: 'Export findings as CSV' })
+  async exportFindingsCsv(
+    @Request() req,
+    @Param('prId', ParseIntPipe) prId: number,
+    @Query('severity') severity?: string,
+    @Query('category') category?: string,
+    @Query('file') file?: string,
+  ) {
+    const { filename, csv } = await this.reviewsService.exportFindingsCsv(prId, {
+      severity,
+      category,
+      file,
+    });
+    const res: Response = req.res;
+    res.setHeader('Content-Type', 'text/csv; charset=utf-8');
+    res.setHeader('Content-Disposition', `attachment; filename="${filename}"`);
+    res.send(csv);
+  }
+
   @Get(':prId/findings/:findingId')
   @ApiOperation({ summary: 'Get a specific finding' })
   getFinding(

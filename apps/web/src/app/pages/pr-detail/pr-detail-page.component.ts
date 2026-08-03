@@ -90,7 +90,12 @@ Run Code Review
 <div>
 <div class="flex items-center justify-between mb-3">
 <h2 class="heading-2 text-text-primary dark:text-text-primary-dark">Findings</h2>
+<div class="flex items-center gap-3">
 <span class="text-sm text-text-secondary dark:text-text-secondary-dark">{{ filteredFindings().length }} of {{ allFindings().length }}</span>
+<button (click)="exportFindings()" class="inline-flex items-center gap-2 rounded-card border border-surface-300 dark:border-neutral-700 px-3 py-1.5 text-xs font-medium text-text-primary dark:text-text-primary-dark hover:border-primary hover:text-primary transition-colors">
+⬇️ Export CSV
+</button>
+</div>
 </div>
 <div class="mb-4">
 <app-findings-filter-bar
@@ -213,5 +218,12 @@ export class PrDetailPageComponent {
 
   protected onFilterChange(): void {
     // Triggered by filter changes, computed auto-updates
+  }
+
+  protected exportFindings(): void {
+    const sev = this.severityFilter();
+    const cat = this.categoryFilter();
+    const url = this.api.getFindingsExportUrl(this.repoId(), this.prId(), { severity: sev, category: cat });
+    window.open(url, '_blank');
   }
 }

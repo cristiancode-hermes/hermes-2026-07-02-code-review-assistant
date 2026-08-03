@@ -52,6 +52,6 @@ export class Finding {
   @Column({ type: 'text', nullable: true })
   codeSnippet: string | null;
 
-  @CreateDateColumn({ type: 'datetime' })
+  @CreateDateColumn({ type: 'timestamp' })
   createdAt: Date;
 }

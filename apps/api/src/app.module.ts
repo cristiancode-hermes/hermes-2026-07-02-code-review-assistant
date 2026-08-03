@@ -32,10 +32,12 @@ import { UserPreference } from './common/entities/user-preference.entity';
       imports: [ConfigModule],
       inject: [ConfigService],
       useFactory: (config: ConfigService) => {
+        const dbType = config.get<string>('DATABASE_TYPE') || 'sqljs';
         const dbPath = config.get<string>('DATABASE_URL') || 'data/code-review.sqlite';
         return {
-          type: 'sqljs' as const,
-          location: dbPath,
+          type: dbType as any,
+          ...(dbType === 'postgres' ? { url: dbPath } : {}),
+          ...(dbType === 'sqljs' ? { location: dbPath } : {}),
           entities: [
             User,
             Repository,
